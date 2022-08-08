@@ -1,0 +1,112 @@
+import React from 'react';
+import './Field.css';
+
+function randomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+class Field extends React.Component{
+  constructor(props){
+    super(props);
+    let filledArray = Array.from(Array(this.props.fieldHeight), () => new Array(this.props.fieldWidth));
+    for (let i = 0; i < this.props.fieldHeight; i++) {
+      for (let j = 0; j < this.props.fieldWidth; j++){
+        filledArray[i][j] = {position: [i,j], val: 0, flag: false, opened: false};
+      }
+    }
+      this.state = ({
+      workArray: filledArray,
+      fieldArray: []
+    })
+
+  }
+
+
+  handleClick = (posi, posj) => {
+    this.setState ({
+      workArray: this.state.workArray.map(element => {
+        element.map(element2 => {
+          if (element2.position[0] == posi && element2.position[1] == posj) {
+            element2.opened = true;
+          }
+          return element2;
+        })
+        return element;
+      })
+    })
+    this.renderTable()
+  }
+
+  fillArray = () => {
+    let filledArray = Array.from(Array(this.props.fieldHeight), () => new Array(this.props.fieldWidth));
+    for (let i = 0; i < this.props.fieldHeight; i++) {
+      for (let j = 0; j < this.props.fieldWidth; j++){
+        filledArray[i][j] = {position: [i,j], val: 0, flag: false, opened: false};
+      }
+    }
+    this.setState ({
+      workArray: filledArray
+    })
+  }
+
+  placeBombs = () => {
+    let tempArr = this.state.workArray;
+    for (let i = 0; i < this.props.bombs; i++){
+      // console.log(tempArr[randomInt(this.props.fieldHeight)][randomInt(this.props.fieldHeight)]);
+      tempArr[randomInt(this.props.fieldHeight)][randomInt(this.props.fieldHeight)].val == 'b' ? i-- : tempArr[randomInt(this.props.fieldHeight)][randomInt(this.props.fieldHeight)].val = 'b'
+    }
+    this.setState ({
+      workArray: tempArr,
+    })
+
+  }
+
+
+  renderTable = () => {
+    let tempArr = this.state.workArray;
+    let filledArrayForTable = [];
+    for (let i = 0; i < this.props.fieldHeight; i++) {
+      let row = [];
+      for (let j = 0; j < this.props.fieldWidth; j++){                                            //Change f to flag image
+        row.push(<td key={'' + i + j}>
+                      <button onClick={() => this.handleClick(i,j)}>
+                        {tempArr[i][j].opened ? tempArr[i][j].val : tempArr[i][j].flagPlaced ? 'f' : null}
+                      </button>
+                  </td>)
+      }
+      filledArrayForTable.push(<tr> {row} </tr>)
+    }
+
+    console.log(filledArrayForTable);
+    console.log(this.state.workArray)
+    this.setState({
+      fieldArray: filledArrayForTable
+    })
+  }
+
+  componentDidMount(){
+  //  this.fillArray();
+    this.renderTable()
+  }
+
+
+  render(){
+
+    return (
+      <div> field
+        <table>
+          <tbody>
+            {this.state.fieldArray}
+          </tbody>
+         </table>
+         <button onClick={this.renderTable}> render field </button>
+         <button onClick={this.placeBombs}> place bombs </button>
+         <div>bombs on field now</div>
+      </div>
+
+
+    )
+  }
+}
+
+export default Field

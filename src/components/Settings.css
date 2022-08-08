@@ -1,0 +1,90 @@
+.settings {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.88);
+  left: 0px;
+}
+
+.settings-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.settings-container input {
+  width: 50px;
+  height: 20px;
+}
+
+.close-settings-button {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: rgba(255, 0, 0, 1);
+}
+
+.close-settings-button:hover {
+  background: rgba(255, 0, 0, 0.5);
+  color: white;
+}
+
+.pressets-container {
+  position: fixed;
+  width: 140px;
+  left: 50%;
+  top: -200%;
+  transform: translate(-50%, 0%);
+}
+
+.presset-button {
+  margin: 5px;
+  width: 100%;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.presset-beginner-button {
+  color: rgba(0, 255, 0, 1);
+}
+.presset-beginner-button:hover {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+.presset-amateur-button {
+  color: rgba(255, 69, 80, 1);
+}
+.presset-amateur-button:hover {
+  background: rgba(255, 69, 80, 0.5);
+}
+
+.presset-professional-button {
+  color: rgba(255, 0, 0, 1);
+}
+.presset-professional-button:hover {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.settings button {
+  cursor: pointer;  
+}
+
+.save-settings-button {
+  position: fixed;
+  width: 100px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  left: 50%;
+  top: 110%;
+  transform: translate(-50%, 0%);
+  color: rgba(0, 255, 0, 1);
+}
+
+.save-settings-button:hover {
+  background: rgba(0, 255, 0, 0.5);
+  color: white;
+}

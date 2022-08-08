@@ -1,0 +1,36 @@
+import React from 'react';
+import Timer from './components/Timer';
+import FlagCounter from './components/FlagCounter';
+import RestartButton from './components/RestartButton';
+import Field from './components/Field';
+
+import './App.css';
+
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = ({
+      flagsLeft: 10,
+      fieldHeight: 9,
+      fieldWidth: 9,
+      bombs: 10
+    })
+  }
+
+  render(){
+    return(
+      <div className="mainContainer">
+        <div> Minesweeper </div>
+        <FlagCounter flagsLeft={this.state.flagsLeft}/>
+        <RestartButton />
+        <Timer />
+
+        <Field fieldHeight={this.state.fieldHeight} fieldWidth={this.state.fieldWidth} bombs={this.state.bombs}/>
+
+      </div>
+
+    )
+  }
+}
+
+export default App;

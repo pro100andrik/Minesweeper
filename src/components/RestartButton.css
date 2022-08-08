@@ -1,0 +1,9 @@
+.restart-button {
+  display: inline-block;
+  width: 40%;
+}
+
+.mainContainer .restart-button {
+  display: inline-block;
+  width: 10%;
+}
