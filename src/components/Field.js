@@ -21,11 +21,6 @@ class Field extends React.Component{
          </table>
 
       </div>
-      // <button onClick={this.props.renderTable}> render field </button>
-      // <button onClick={this.props.placeBombs}> place bombs </button>
-      // <button onClick={this.props.countNumbersNearBombs}> count bombs </button>
-      // <div>bombs on field now {this.props.bombsOnFieldNow}</div>
-
     )
   }
 }

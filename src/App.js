@@ -5,6 +5,7 @@ import RestartButton from './components/RestartButton';
 import Field from './components/Field';
 import Settings from './components/Settings';
 import WinOrLooseMessage from './components/WinOrLooseMessage';
+import Statistics from './components/Statistics';
 
 import flagIcon from './components/icons/flag.png'
 import bombIcon from './components/icons/bomb.png'
@@ -14,6 +15,8 @@ import './App.css';
 function randomInt(max) {
   return Math.floor(Math.random() * max);
 }
+
+const localStorage = window.localStorage;
 
 const Icon = props => {
   return <img src={props.image} alt='img' className='icon' />
@@ -50,7 +53,12 @@ class App extends React.Component{
       gameIsStarted: false,
       elapsedTime: 0,
       colorForFlagsCounter: {color:'white'},
-      smile: '🙂'
+      smile: '🙂',
+      moves: 0,
+      beginnerBest: (localStorage.getItem('minesweeperBeginnerBest') ? localStorage.getItem('minesweeperBeginnerBest').split('+') : [0, 0]),
+      amateurBest: (localStorage.getItem('minesweeperAmateurBest') ? localStorage.getItem('minesweeperAmateurBest').split('+') : [0, 0]),
+      professionalBest: (localStorage.getItem('minesweeperProfessionalBest') ? localStorage.getItem('minesweeperProfessionalBest').split('+') : [0, 0]),
+
     })
   }
 
@@ -60,10 +68,10 @@ class App extends React.Component{
         clearInterval(timerInterval)
       }else{
         this.setState({
-          elapsedTime: this.state.elapsedTime + 1
+          elapsedTime: this.state.elapsedTime + 10
         })
       }
-    },1000)
+    },10)
   }
 
   handleClick = (posI, posJ) => {
@@ -74,13 +82,17 @@ class App extends React.Component{
 
     }
     let checkIfLoose = false;
-    if (this.state.loose){
-    }else{
+    if (!this.state.loose){
       this.setState ({
         workArray: this.state.workArray.map(element => {
           element.map(nestedElement => {
             if (nestedElement.position[0] === posI && nestedElement.position[1] === posJ) {
               if (nestedElement.flagPlaced === false){
+
+                if (nestedElement.opened === false){
+                  this.setState({moves: this.state.moves+1})
+                }
+
                 nestedElement.opened = true;
                 if (nestedElement.val === 'b'){
                   checkIfLoose = true;
@@ -93,9 +105,7 @@ class App extends React.Component{
         })
       })
       this.checkNeiborsForEmpty(posI, posJ);
-      this.checkForWin();
 
-      this.renderTable();
       if (checkIfLoose) {
         this.setState ({
           loose: true,
@@ -104,6 +114,8 @@ class App extends React.Component{
         })
         this.openBombs();
       }
+      this.checkForWin();
+      this.renderTable();
     }
   }
 
@@ -141,6 +153,26 @@ class App extends React.Component{
       openedCells: openedCells
     })
     if (openedCells === opennedForWin && !this.state.loose){
+
+      if (this.state.fieldHeight === 9 && this.state.fieldWidth === 9 && this.state.bombs === 10){
+        if(this.state.beginnerBest[1] === 0 || this.state.elapsedTime < this.state.beginnerBest[1]){
+          this.setState({beginnerBest: [this.state.moves, this.state.elapsedTime]})
+          localStorage.setItem('minesweeperBeginnerBest', [this.state.moves, this.state.elapsedTime].join('+'))
+        }
+      }
+      if (this.state.fieldHeight === 16 && this.state.fieldWidth === 16 && this.state.bombs === 40){
+        if(this.state.amateurBest[1] === 0 || this.state.elapsedTime < this.state.amateurBest[1]){
+          this.setState({amateurBest: [this.state.moves, this.state.elapsedTime]})
+          localStorage.setItem('minesweeperAmateurBest', [this.state.moves, this.state.elapsedTime].join('+'))
+        }
+      }
+      if (this.state.fieldHeight === 16 && this.state.fieldWidth === 30 && this.state.bombs === 99){
+        if(this.state.professionalBest[1] === 0 || this.state.elapsedTime < this.state.professionalBest[1]){
+          this.setState({professionalBest: [this.state.moves, this.state.elapsedTime]})
+          localStorage.setItem('minesweeperProfessionalBest', [this.state.moves, this.state.elapsedTime].join('+'))
+        }
+      }
+
       this.setState ({
         win: true,
         gameIsStarted: false,
@@ -411,7 +443,8 @@ class App extends React.Component{
       win: false,
       elapsedTime: 0,
       gameIsStarted: false,
-      smile: '🙂'
+      smile: '🙂',
+      moves: 0
     }, this.fillArray)
 
     // this.setState ({
@@ -479,7 +512,7 @@ class App extends React.Component{
                   </td>)
       }
 
-      filledArrayForTable.push(<tr> {row} </tr>)
+      filledArrayForTable.push(<tr key={i}>{row}</tr>)
     }
 
     this.setState({
@@ -510,6 +543,13 @@ class App extends React.Component{
         showSettings: false
       })
     }
+  }
+
+  handleClearScore = (whichScore) => {
+    this.setState({
+      [whichScore]: [0, 0]
+    })
+    localStorage.removeItem('minesweeper' + whichScore[0].toUpperCase() + whichScore.slice(1))
   }
 
   render(){
@@ -545,11 +585,23 @@ class App extends React.Component{
                 placeBombs={this.placeBombs}
                 bombsOnFieldNow={this.state.bombsOnFieldNow}
                 countNumbersNearBombs={this.countNumbersNearBombs}/>
+
+          <Statistics moves={this.state.moves}
+            beginnerBest={this.state.beginnerBest}
+            amateurBest={this.state.amateurBest}
+            professionalBest={this.state.professionalBest}
+            handleClearScore={this.handleClearScore}/>
+
           <button onClick={() => this.setState({showSettings:true})}
                   className="settings-button">
                   Settings
           </button>
+
         </div>
+
+
+
+
         {this.state.showSettings
           ?
         <Settings height={this.state.fieldHeight}

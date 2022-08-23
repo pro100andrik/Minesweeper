@@ -6,7 +6,7 @@ function formatTime(time){
 
 const Timer = props => {
   return (
-    <div className='timer'> {formatTime(props.elapsedTime)} </div>
+    <div className='timer'> {formatTime(Math.floor(props.elapsedTime / 1000))} </div>
   )
 }
 

@@ -1,0 +1,29 @@
+.clear-button {
+  width: 40px;
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 0 3px;
+  font-size: 70%;
+}
+
+.statistic-button {
+  cursor: pointer;
+  border: 1px solid white;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.beginner-scores {
+  color: rgba(0, 255, 0, 1);
+}
+
+.amateur-scores {
+  color: rgba(255, 69, 80, 1);
+}
+
+.professional-scores {
+  color: rgba(255, 0, 0, 1);
+}
+
+.scores-container {
+  font-size: 70%;
+}
