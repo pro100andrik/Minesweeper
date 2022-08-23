@@ -18,11 +18,11 @@
 }
 
 .loose {
-    background: rgba(255, 4, 4, 0.78);
+    background: rgb(255, 4, 4);
 }
 
 .win {
-    background: rgba(82, 255, 0, 0.78);
+    background: rgb(28, 199, 0);
 }
 
 .win-or-loose-text {
