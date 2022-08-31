@@ -479,11 +479,6 @@ class App extends React.Component{
       moves: 0,
       confetiLaunched: false,
     }, this.fillArray)
-
-    // this.setState ({
-    //   elapsedTime: 0,
-    //   gameIsStarted: false
-    // }, this.startTimer)
   }
 
   setStyleForNumbers = (value) => {
@@ -632,9 +627,6 @@ class App extends React.Component{
 
         </div>
 
-
-
-
         {this.state.showSettings
           ?
         <Settings height={this.state.fieldHeight}
@@ -654,8 +646,6 @@ class App extends React.Component{
         <WinOrLooseMessage type='loose' restartGame={this.restartGame}/>
           :
         null}
-
-
 
       </div>
 
