@@ -12,6 +12,9 @@ import bombIcon from './components/icons/bomb.png'
 
 import './App.css';
 
+import confetti from 'canvas-confetti';
+
+
 function randomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -58,9 +61,35 @@ class App extends React.Component{
       beginnerBest: (localStorage.getItem('minesweeperBeginnerBest') ? localStorage.getItem('minesweeperBeginnerBest').split('+') : [0, 0]),
       amateurBest: (localStorage.getItem('minesweeperAmateurBest') ? localStorage.getItem('minesweeperAmateurBest').split('+') : [0, 0]),
       professionalBest: (localStorage.getItem('minesweeperProfessionalBest') ? localStorage.getItem('minesweeperProfessionalBest').split('+') : [0, 0]),
-
+      confetiLaunched: false,
     })
   }
+
+  handleLaunchConfeti = () => {
+    this.setState({
+      confetiLaunched:  true,
+    })
+    const colors = ['#ff0000', '#800080', '#ffa500', '#FFFF00', '#00ff00', '#F0FFFF', '#0000ff'];
+    const interval = setInterval(() => {
+      confetti({
+        particleCount: 7,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors
+      });
+      confetti({
+        particleCount: 7,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors
+      });
+      if (this.state.confetiLaunched === false){
+        clearInterval(interval)
+      }
+    }, 30)
+  };
 
   startTimer = () => {
     let timerInterval = setInterval(() => {
@@ -153,6 +182,9 @@ class App extends React.Component{
       openedCells: openedCells
     })
     if (openedCells === opennedForWin && !this.state.loose){
+
+      this.handleLaunchConfeti()
+
 
       if (this.state.fieldHeight === 9 && this.state.fieldWidth === 9 && this.state.bombs === 10){
         if(this.state.beginnerBest[1] === 0 || this.state.elapsedTime < this.state.beginnerBest[1]){
@@ -444,7 +476,8 @@ class App extends React.Component{
       elapsedTime: 0,
       gameIsStarted: false,
       smile: '🙂',
-      moves: 0
+      moves: 0,
+      confetiLaunched: false,
     }, this.fillArray)
 
     // this.setState ({
