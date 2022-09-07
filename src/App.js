@@ -582,7 +582,7 @@ class App extends React.Component{
 
   render(){
     return(
-      <div>
+      <div className='main-wrapper'>
         <div className="mainContainer">
           <div className='caption'>
             <span className='one leter'>M</span>

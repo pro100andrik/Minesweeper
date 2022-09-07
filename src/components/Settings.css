@@ -70,7 +70,7 @@
 }
 
 .settings button {
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .save-settings-button {
@@ -87,4 +87,16 @@
 .save-settings-button:hover {
   background: rgba(0, 255, 0, 0.5);
   color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+
+  .settings-container {
+  font-size: 80%;
+  }
+
+  .pressets-container {
+    top: -250%;
+  }
 }
