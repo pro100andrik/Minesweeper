@@ -14,8 +14,13 @@
 }
 
 .settings-container input {
-  width: 50px;
+  width: 40px;
   height: 20px;
+}
+
+.inputs-container {
+  width: 80vw;
+  text-align: center;
 }
 
 .close-settings-button {

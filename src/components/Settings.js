@@ -82,22 +82,23 @@ class Settings extends React.Component {
             Professional
             </button>
           </div>
-
-          <div> height of field: <input value={this.state.height}
-                                        type='number'
-                                        min='1'
-                                        onChange={(e) => this.handleChange('height', e.target.value)}/>
-          </div>
-          <div> width of field: <input value={this.state.width}
-                                        type='number'
-                                        min='1'
-                                        onChange={(e) => this.handleChange('width', e.target.value)}/>
-          </div>
-          <div> bombs on field: <input value={this.state.bombsAndFlags}
-                                        type='number'
-                                        min='1'
-                                        max={this.state.maxBombs}
-                                        onChange={(e) => this.handleChange('bombsAndFlags', e.target.value)}/>
+          <div className='inputs-container'>
+            <div> height of field: <input value={this.state.height}
+                                          type='number'
+                                          min='1'
+                                          onChange={(e) => this.handleChange('height', e.target.value)}/>
+            </div>
+            <div> width of field: <input value={this.state.width}
+                                          type='number'
+                                          min='1'
+                                          onChange={(e) => this.handleChange('width', e.target.value)}/>
+            </div>
+            <div> bombs on field: <input value={this.state.bombsAndFlags}
+                                          type='number'
+                                          min='1'
+                                          max={this.state.maxBombs}
+                                          onChange={(e) => this.handleChange('bombsAndFlags', e.target.value)}/>
+            </div>
           </div>
           <button className='save-settings-button'
                   onClick={() =>this.handleCloseOrSaveSettings('save')}>
